@@ -1,8 +1,32 @@
-var express = require('express'),
-bodyParser = require('body-parser'),
-app = express();
+var express = require('express');
+var mysqul = require("mysql");
+
+var bodyParser = require('body-parser');
+var app = express();
+
+
 // Sets an initial port. We"ll use this later in our listener
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
+
+
+  connection.connect(function(err) {
+    if (process.env.JAWSDB_URL) {
+     connection = mysqul.createConnection(process.env.JAWSDB_URL);
+    }else{
+        connection = mysql.createConnection({
+            host: "localhost",
+            port: 3308,
+            user: "root",
+            password: "root",
+            database: "nerds_db"
+          });
+    };
+  
+    console.log("connected as id " + connection.threadId);
+  });
+  connection.connect();
+  module.exports = connection;
+  
 // middleware parses data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
